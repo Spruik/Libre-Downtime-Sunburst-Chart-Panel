@@ -1,0 +1,1 @@
+# smart-factory-pareto-reason-codes-sunburst-chart-panel-
