@@ -64,7 +64,7 @@ System.register([], function (_export, _context) {
       //calculate the total duration for this category
       var totalDuration = calcDuration(category, data);
       totalDuration = toHrsAndMins(totalDuration);
-      console.log(totalDuration);
+      // console.log(totalDuration);
 
       var obj = {
         name: category,
@@ -102,7 +102,7 @@ System.register([], function (_export, _context) {
 
         var totalDuration = calcDurationForReason(category.name, data, p_reason);
         totalDuration = toHrsAndMins(totalDuration);
-        console.log(totalDuration);
+        // console.log(totalDuration);
 
         var obj = {
           name: p_reason,

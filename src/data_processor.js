@@ -54,7 +54,7 @@ export function getSunburstData(data){
     //calculate the total duration for this category
     let totalDuration = calcDuration(category, data)
     totalDuration = toHrsAndMins(totalDuration)
-    console.log(totalDuration);
+    // console.log(totalDuration);
 
     let obj = {
       name: category,
@@ -89,7 +89,7 @@ function getParentReasons(root, data) {
 
       let totalDuration = calcDurationForReason(category.name, data, p_reason)
       totalDuration = toHrsAndMins(totalDuration)
-      console.log(totalDuration);
+      // console.log(totalDuration);
       
       let obj = {
         name: p_reason,
