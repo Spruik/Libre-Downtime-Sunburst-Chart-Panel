@@ -1,7 +1,7 @@
 import * as dp from './data_processor'
 
 export function getOption (data) {
-  const sunburst_data = dp.getSunburstData(data)
+  const sunburstData = dp.getSunburstData(data)
   const totalDuration = dp.getTotalDuration(data)
 
   return {
@@ -28,8 +28,7 @@ export function getOption (data) {
     },
     series: {
       type: 'sunburst',
-      // highlightPolicy: 'ancestor',
-      data: sunburst_data,
+      data: sunburstData,
       radius: [30, '100%'],
       label: {
         rotate: 'radial-'
