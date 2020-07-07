@@ -4,7 +4,8 @@ import * as dp from './data_processor'
 import * as pie from './pie_chart_option'
 import echarts from './libs/echarts.min'
 import { MetricsPanelCtrl } from 'app/plugins/sdk'
-import * as utils from '.utils'
+import * as utils from './utils'
+import moment from 'moment'
 
 const panelDefaults = {
   targets: [{}],
@@ -75,14 +76,38 @@ export class ChartCtrl extends MetricsPanelCtrl {
     }
 
     // dataList data is messy and with lots of unwanted data, so we need to filter out data that we want -
-    const data = dp.restructuredData(dataList[0].columns, dataList[0].rows)
+    let data = dp.restructuredData(dataList[0].columns, dataList[0].rows)
 
     if (dp.getCategories(data).length === 0) {
       this.hasData = false
       return
     }
 
+    data = this.calcDurationInt(data)
+
     this.render(data)
+  }
+
+  calcDurationInt (data) {
+    if (!data[0].durationint) {
+      const _to = this.range.to.isAfter(moment()) ? moment() : this.range.to
+      let _prevTime = null
+      for (let i = data.length - 1; i >= 0; i--) {
+        const item = data[i]
+        if (i === data.length - 1) {
+          // first one
+          const diff = _to.diff(moment(item.time))
+          const duration = moment.duration(diff)
+          item.durationint = duration.valueOf()
+        } else {
+          const diff = _prevTime.diff(item.time)
+          const duration = moment.duration(diff)
+          item.durationint = duration.valueOf()
+        }
+        _prevTime = moment(item.time)
+      }
+    }
+    return data
   }
 
   rendering () {
