@@ -1,18 +1,18 @@
 measurement,Time,Site,Area,Line,MachineState,execute,held,idle,stopped,complete,category,reason,comment,parentReason,equipment
-Availability,1594131154340000,Site,Area,Line 1,execute,1.00,0.00,0.00,0.00,0.00,,,,,
-Availability,1594131454340000,Site,Area,Line 1,held,0.00,1.00,0.00,0.00,0.00,Unplanned,Quality,Tolerances,Quality,Palletizer
-Availability,1594131754340000,Site,Area,Line 1,execute,1.00,0.00,0.00,0.00,0.00,,,,,
-Availability,1594132054340000,Site,Area,Line 1,held,0.00,1.00,0.00,0.00,0.00,Unplanned,Quality,Wrong Component,Quality,Cartooner
-Availability,1594132354340000,Site,Area,Line 1,execute,1.00,0.00,0.00,0.00,0.00,,,,,
-Availability,1594132654340000,Site,Area,Line 1,held,0.00,1.00,0.00,0.00,0.00,Planned,Training,New Recruit,Training,
-Availability,1594132954340000,Site,Area,Line 1,execute,1.00,0.00,0.00,0.00,0.00,,,,,
-Availability,1594133254340000,Site,Area,Line 1,held,0.00,1.00,0.00,0.00,0.00,Unplanned,Quality,Tolerances,Quality,
-Availability,1594133554340000,Site,Area,Line 1,execute,1.00,0.00,0.00,0.00,0.00,,,,,
-Availability,1594133854340000,Site,Area,Line 1,held,0.00,1.00,0.00,0.00,0.00,Unplanned,Mechanical Breakdown,Misalignment,Mechanical Breakdown,Palletizer
-Availability,1594134154340000,Site,Area,Line 1,execute,1.00,0.00,0.00,0.00,0.00,,,,,
-Availability,1594134454340000,Site,Area,Line 1,held,0.00,1.00,0.00,0.00,0.00,Unplanned,Electrical Breakdown,Sensor Failure,Electrical Breakdown,Palletizer
-Availability,1594134754340000,Site,Area,Line 1,execute,1.00,0.00,0.00,0.00,0.00,,,,,
-Availability,1594135054340000,Site,Area,Line 1,held,0.00,1.00,0.00,0.00,0.00,Planned,Breaks,Lunch,Breaks,
-Availability,1594135354340000,Site,Area,Line 1,execute,1.00,0.00,0.00,0.00,0.00,,,,,
-Availability,1594135654340000,Site,Area,Line 1,held,0.00,1.00,0.00,0.00,0.00,Unplanned,Electrical Breakdown,Proximity Switch,Electrical Breakdown,Palletizer
-Availability,1594135954340000,Site,Area,Line 1,execute,1.00,0.00,0.00,0.00,0.00,,,,,
+Availability,1594131154340000000,Site,Area,Line 1,execute,1.00,0.00,0.00,0.00,0.00, , , , , 
+Availability,1594131454340000000,Site,Area,Line 1,held,0.00,1.00,0.00,0.00,0.00,Unplanned,Quality,Tolerances,Quality,Palletizer
+Availability,1594131754340000000,Site,Area,Line 1,execute,1.00,0.00,0.00,0.00,0.00, , , , , 
+Availability,1594132054340000000,Site,Area,Line 1,held,0.00,1.00,0.00,0.00,0.00,Unplanned,Quality,Wrong Component,Quality,Cartooner
+Availability,1594132354340000000,Site,Area,Line 1,execute,1.00,0.00,0.00,0.00,0.00, , , , , 
+Availability,1594132654340000000,Site,Area,Line 1,held,0.00,1.00,0.00,0.00,0.00,Planned,Training,New Recruit,Training, 
+Availability,1594132954340000000,Site,Area,Line 1,execute,1.00,0.00,0.00,0.00,0.00, , , , , 
+Availability,1594133254340000000,Site,Area,Line 1,held,0.00,1.00,0.00,0.00,0.00,Unplanned,Quality,Tolerances,Quality, 
+Availability,1594133554340000000,Site,Area,Line 1,execute,1.00,0.00,0.00,0.00,0.00, , , , , 
+Availability,1594133854340000000,Site,Area,Line 1,held,0.00,1.00,0.00,0.00,0.00,Unplanned,Mechanical Breakdown,Misalignment,Mechanical Breakdown,Palletizer
+Availability,1594134154340000000,Site,Area,Line 1,execute,1.00,0.00,0.00,0.00,0.00, , , , , 
+Availability,1594134454340000000,Site,Area,Line 1,held,0.00,1.00,0.00,0.00,0.00,Unplanned,Electrical Breakdown,Sensor Failure,Electrical Breakdown,Palletizer
+Availability,1594134754340000000,Site,Area,Line 1,execute,1.00,0.00,0.00,0.00,0.00, , , , , 
+Availability,1594135054340000000,Site,Area,Line 1,held,0.00,1.00,0.00,0.00,0.00,Planned,Breaks,Lunch,Breaks, 
+Availability,1594135354340000000,Site,Area,Line 1,execute,1.00,0.00,0.00,0.00,0.00, , , , , 
+Availability,1594135654340000000,Site,Area,Line 1,held,0.00,1.00,0.00,0.00,0.00,Unplanned,Electrical Breakdown,Proximity Switch,Electrical Breakdown,Palletizer
+Availability,1594135954340000000,Site,Area,Line 1,execute,1.00,0.00,0.00,0.00,0.00, , , , , 
