@@ -1,14 +1,13 @@
 import * as dp from './data_processor'
 
 export function getOption (data) {
-
-const sunburst_data = dp.getSunburstData(data)
-const totalDuration = dp.getTotalDuration(data)
+  const sunburstData = dp.getSunburstData(data)
+  const totalDuration = dp.getTotalDuration(data)
 
   return {
     tooltip: {
       trigger: 'item',
-      formatter: (params) => {            
+      formatter: (params) => {
         if (params.data.name === undefined || params.data.name === null) {
           let tooltip = '<p style="text-align:center;margin:0px;color:#999">Root</p>'
           tooltip += '<div style="margin:5px 0px 5px 0px; width:100%; height:1px; background: #999"></div>'
@@ -25,12 +24,11 @@ const totalDuration = dp.getTotalDuration(data)
       backgroundColor: '#eee',
       borderColor: '#aaa',
       borderWidth: 1,
-      borderRadius: 4,
+      borderRadius: 4
     },
     series: {
       type: 'sunburst',
-      // highlightPolicy: 'ancestor',
-      data: sunburst_data,
+      data: sunburstData,
       radius: [30, '100%'],
       label: {
         rotate: 'radial-'

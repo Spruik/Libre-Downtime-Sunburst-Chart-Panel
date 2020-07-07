@@ -2,36 +2,35 @@
 /**
  * Expecting the restructured datalist
  * Return an array with distinct categories  --> ['category-1', 'category-2', ...]
- * @param {*} data 
+ * @param {*} data
  */
-export function getCategories(data) {
-  
-  let categories = data.reduce((arr, d) => {
+export function getCategories (data) {
+  const categories = data.reduce((arr, d) => {
     if (d.category !== null && d.category !== undefined) {
       arr.push(d.category)
     }
     return arr
   }, [])
-  
+
   return Array.from(new Set(categories))
 }
 
 /**
  * Expecting columns names, and rows values
  * Return {col-1 : value-1, col-2 : value-2 .....}
- * @param {*} rowCols 
- * @param {*} rows 
+ * @param {*} rowCols
+ * @param {*} rows
  */
 export function restructuredData (rowCols, rows) {
-  let data = []
-  let cols = rowCols.reduce((arr, c) => {
+  const data = []
+  const cols = rowCols.reduce((arr, c) => {
     const col = c.text.toLowerCase()
     arr.push(col)
     return arr
   }, [])
   for (let i = 0; i < rows.length; i++) {
     const row = rows[i]
-    let serise = {}
+    const serise = {}
     for (let k = 0; k < cols.length; k++) {
       const col = cols[k]
       serise[col] = row[k]
@@ -42,21 +41,19 @@ export function restructuredData (rowCols, rows) {
   return data
 }
 
-export function getSunburstData(data){
-
+export function getSunburstData (data) {
   const cate = data.filter(d => d.category !== null && d.category !== undefined)
   const categories = findDistinct(cate, 'categories')
 
-  let root = []
+  const root = []
 
   for (let i = 0; i < categories.length; i++) {
-    const category = categories[i];
-    //calculate the total duration for this category
+    const category = categories[i]
+    // calculate the total duration for this category
     let totalDuration = calcDuration(category, data)
     totalDuration = toHrsAndMins(totalDuration)
-    // console.log(totalDuration);
 
-    let obj = {
+    const obj = {
       name: category,
       children: [],
       value: getCategoryFrequency(data, category),
@@ -73,31 +70,29 @@ export function getSunburstData(data){
   return getParentReasons(root, data)
 }
 
-function getParentReasons(root, data) {
-
+function getParentReasons (root, data) {
   const reasonsCounts = countReasons(data)
 
   for (let i = 0; i < root.length; i++) {
-    const category = root[i];
-    //filter parent reaons that are from this category
-    let p_reasons = data.filter(d => d.category === category.name && d.parentreason !== null)
-    //find distinct reasons    
-    p_reasons = findDistinct(p_reasons, 'p_reasons')
-    //for each distinct reason
-    for (let k = 0; k < p_reasons.length; k++) {
-      const p_reason = p_reasons[k];
+    const category = root[i]
+    // filter parent reaons that are from this category
+    let parentReasons = data.filter(d => d.category === category.name && d.parentreason !== null)
+    // find distinct reasons
+    parentReasons = findDistinct(parentReasons, 'p_reasons')
+    // for each distinct reason
+    for (let k = 0; k < parentReasons.length; k++) {
+      const parentReason = parentReasons[k]
 
-      let totalDuration = calcDurationForReason(category.name, data, p_reason)
+      let totalDuration = calcDurationForReason(category.name, data, parentReason)
       totalDuration = toHrsAndMins(totalDuration)
-      // console.log(totalDuration);
-      
+
       let obj = {
-        name: p_reason,
+        name: parentReason,
         children: [],
-        value: reasonsCounts[p_reason],
+        value: reasonsCounts[parentReason],
         info: {
           category: category.name,
-          reason: p_reason,
+          reason: parentReason,
           type: 'Reason',
           parent: category.name,
           duration: totalDuration
@@ -111,47 +106,43 @@ function getParentReasons(root, data) {
   return root
 }
 
-function addSubReasons(node, category, data, reasonsCounts) {
-  
+function addSubReasons (node, category, data, reasonsCounts) {
   const allReasons = data.filter(d => d.reason !== null & d.reason !== undefined)
-  let real_index
+  let realIndex
 
-  let sub_reasons = allReasons.filter(d => {
-
+  let subReasons = allReasons.filter(d => {
     const reasons = d.reason.split(' | ')
-    let index = reasons.indexOf(node.name)
+    const index = reasons.indexOf(node.name)
     if (index !== -1) {
-      real_index = index
+      realIndex = index
     }
     return index !== -1 && index !== reasons.length - 1
-
   })
 
   let duration = 0.00
-  for (let i = 0; i < sub_reasons.length; i++) {
-    const r = sub_reasons[i];
+  for (let i = 0; i < subReasons.length; i++) {
+    const r = subReasons[i]
     duration += r.durationint
   }
   duration = toHrsAndMins(duration)
 
-  sub_reasons = findDisctinctSubReasons(sub_reasons, real_index)
-  
-  //---------------------------------------------------------------------------------------------------------------------
-  //continue to add duration to sub-reason
-  //---------------------------------------------------------------------------------------------------------------------
+  subReasons = findDisctinctSubReasons(subReasons, realIndex)
 
-  if (sub_reasons.length > 0) {
-    
-    for (let i = 0; i < sub_reasons.length; i++) {
-      let sub_reason = sub_reasons[i];
+  // ---------------------------------------------------------------------------------------------------------------------
+  // continue to add duration to sub-reason
+  // ---------------------------------------------------------------------------------------------------------------------
+
+  if (subReasons.length > 0) {
+    for (let i = 0; i < subReasons.length; i++) {
+      const subReason = subReasons[i]
 
       let child = {
-        name: sub_reason ,
+        name: subReason,
         children: [],
-        value: reasonsCounts[sub_reason],
+        value: reasonsCounts[subReason],
         info: {
           category: category.name,
-          reasons: sub_reason,
+          reasons: subReason,
           type: 'Sub Reason',
           parent: node.name,
           duration: duration
@@ -160,70 +151,71 @@ function addSubReasons(node, category, data, reasonsCounts) {
       child = addSubReasons(child, category, data, reasonsCounts)
       node.children[i] = child
     }
-  }else {
+  } else {
 
   }
 
   return node
 }
 
-function countReasons(data){
-
-  const reasons_arr = data.reduce((arr, d) => {
+function countReasons (data) {
+  const reasonsArray = data.reduce((arr, d) => {
     if (d.reason) {
       const reasons = d.reason.split(' | ')
       for (let i = 0; i < reasons.length; i++) {
-        const reason = reasons[i];
+        const reason = reasons[i]
         arr.push(reason)
       }
     }
     return arr
   }, [])
 
-  let counts = {}
-  reasons_arr.forEach( x => counts[x] = (counts[x] || 0) + 1)
+  const counts = {}
+  reasonsArray.forEach(
+    (x) => { counts[x] = (counts[x] || 0) + 1 }
+  )
 
   return counts
 }
 
-function findDistinct(data, key){
+function findDistinct (data, key) {
   return Array.from(new Set(data.reduce((arr, record) => {
     if (key === 'categories') {
       arr.push(record.category)
-    }else if (key === 'p_reasons') {
+    } else if (key === 'p_reasons') {
       arr.push(record.parentreason)
     }
     return arr
   }, [])))
 }
 
-function getCategoryFrequency(data, category){
+function getCategoryFrequency (data, category) {
   const categories = data.filter(d => d.category === category)
   return categories.length
 }
 
-function findDisctinctSubReasons(sub_reasons, index){
-  return Array.from(new Set(sub_reasons.reduce((arr, d)=>{
+function findDisctinctSubReasons (subReasons, index) {
+  return Array.from(new Set(subReasons.reduce((arr, d) => {
     const reasons = d.reason.split(' | ')
     arr.push(reasons[index + 1])
     return arr
   }, [])))
 }
 
-function calcDuration(category, data) {
+function calcDuration (category, data) {
   let duration = 0.00
   data.forEach((d) => {
-      if (d.category === category) {
-        duration += d.durationint
-      }
+    if (d.category === category) {
+      duration += d.durationint
+    }
   })
   return duration
 }
 
-function calcDurationForReason(category, data, p_reason) {
+function calcDurationForReason (category, data, parentReason) {
   let duration = 0.00
   data.forEach(d => {
-    if (d.category === category && d.parentreason === p_reason) {
+    if (d.category === category && d.parentreason === parentReason) {
       duration += d.durationint
     }
   })
@@ -232,38 +224,38 @@ function calcDurationForReason(category, data, p_reason) {
 
 /**
  * Expecting a duration int value, return (string) hours and mins like 2:35 meaning 2 hours and 35 mins
- * if val is under 1 hour,  return (string) mins like 55-mins 
- * @param {*} val 
+ * if val is under 1 hour,  return (string) mins like 55-mins
+ * @param {*} val
  */
-function toHrsAndMins(difference){  
-  const daysDiff = Math.floor(difference/1000/60/60/24)
-  difference -= daysDiff*1000*60*60*24
+function toHrsAndMins (difference) {
+  const daysDiff = Math.floor(difference / 1000 / 60 / 60 / 24)
+  difference -= daysDiff * 1000 * 60 * 60 * 24
 
-  let hrsDiff = Math.floor(difference/1000/60/60)
-  difference -= hrsDiff*1000*60*60
+  let hrsDiff = Math.floor(difference / 1000 / 60 / 60)
+  difference -= hrsDiff * 1000 * 60 * 60
 
-  const minsDiff = Math.floor(difference/1000/60)
-  difference -= minsDiff*1000*60
+  const minsDiff = Math.floor(difference / 1000 / 60)
+  difference -= minsDiff * 1000 * 60
 
-  const secsDiff = Math.floor(difference/1000)
-  difference -= minsDiff*1000
+  const secsDiff = Math.floor(difference / 1000)
+  difference -= minsDiff * 1000
 
-  let timeToAdd = daysDiff * 24
+  const timeToAdd = daysDiff * 24
   hrsDiff = hrsDiff + timeToAdd
-  
+
   if (hrsDiff === 0 && minsDiff === 0) {
     return secsDiff + ' Seconds'
-  }else if (hrsDiff === 0 && minsDiff !== 0) {
+  } else if (hrsDiff === 0 && minsDiff !== 0) {
     return minsDiff + ' Minutes'
   }
 
   return hrsDiff + ' Hrs & ' + minsDiff + ' Mins'
 }
 
-export function getTotalDuration(data){
+export function getTotalDuration (data) {
   let dur = 0.00
   for (let i = 0; i < data.length; i++) {
-    const d = data[i];
+    const d = data[i]
     if (d.durationint) {
       dur += d.durationint
     }
