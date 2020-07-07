@@ -1,14 +1,14 @@
 {
-  "name": "smart-factory-pareto-reason-codes-sunburst-chart-panel",
+  "name": "libre-downtime-sunburt-chart-panel",
   "version": "1.0.0",
-  "description": "Pareto Analysis Reason Codes Sunburst Chart",
+  "description": "Libre Panel for Sunburt Chart Downtime Analysis",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Spruik/smart-factory-pareto-reason-codes-sunburst-chart-panel"
+    "url": "https://github.com/Spruik/Libre-Downtime-Sunburst-Chart-Panel"
   },
   "author": "Spruik Technologies",
   "bugs": {
-    "url": "https://github.com/Spruik/smart-factory-pareto-reason-codes-sunburst-chart-panel/issues"
+    "url": "https://github.com/Spruik/Libre-Downtime-Sunburst-Chart-Panel/issues"
   },
   "main": "src/module.js",
   "scripts": {
