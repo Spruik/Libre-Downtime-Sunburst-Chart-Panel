@@ -10,7 +10,7 @@ module.exports = function (grunt) {
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    clean: ['dist'],
+    clean: ['dist', 'libre-downtime-sunburst-chart-panel.zip'],
 
     jshint: {
       options: {
@@ -18,7 +18,6 @@ module.exports = function (grunt) {
       },
       src: ['Gruntfile.js', 'src/*.js']
     },
-
     copy: {
       src_to_dist: {
         cwd: 'src',
@@ -26,34 +25,38 @@ module.exports = function (grunt) {
         src: ['**/*', '!**/*.js', '!image/**/*'],
         dest: 'dist'
       },
-      libs: {
-        cwd: 'libs',
-        expand: true,
-        src: ['**.*'],
-        dest: 'dist/libs',
-        options: {
-          process: content => content.replace(/(\'|")ion.rangeSlider(\'|")/g, '$1./ion.rangeSlider.min$2'), // eslint-disable-line
-        }
-      },
       echarts_libs: {
         cwd: 'node_modules/echarts/dist',
         expand: true,
         src: ['echarts.min.js'],
         dest: 'dist/libs/'
       },
-      image_to_dist: {
-        cwd: 'src',
-        expand: true,
-        src: ['src/image/**/*'],
-        dest: 'dist/image/'
-      },
       pluginDef: {
         expand: true,
         src: ['plugin.json'],
         dest: 'dist'
+      },
+      readme: {
+        expand: true,
+        src: ['README.md', 'docs/**', 'LICENSE', 'MAINTAINERS'],
+        dest: 'dist'
       }
     },
-
+    'string-replace': {
+      dist: {
+        files: {
+          'dist/README.md': 'dist/README.md'
+        },
+        options: {
+          replacements: [
+            {
+              pattern: /docs\//g,
+              replacement: 'public/plugins/libre-downtime-sunburst-chart-panel/docs/'
+            }
+          ]
+        }
+      }
+    },
     watch: {
       rebuild_all: {
         files: ['src/**/*', 'plugin.json'],
@@ -61,7 +64,6 @@ module.exports = function (grunt) {
         options: { spawn: false }
       }
     },
-
     babel: {
       options: {
         ignore: ['**/src/libs/*'],
@@ -78,15 +80,30 @@ module.exports = function (grunt) {
           ext: '.js'
         }]
       }
+    },
+    compress: {
+      main: {
+        options: {
+          archive: 'libre-downtime-sunburst-chart-panel.zip'
+        },
+        expand: true,
+        cwd: 'dist/',
+        src: ['**/*']
+      }
     }
   })
+
   grunt.registerTask('default', [
-    // 'jshint',
-    'clean',
     'copy:src_to_dist',
-    'copy:libs',
     'copy:echarts_libs',
     'copy:pluginDef',
-    'copy:image_to_dist',
+    'copy:readme',
+    'string-replace',
     'babel'])
+
+  grunt.registerTask('build', [
+    'clean',
+    'default',
+    'compress'
+  ])
 }
