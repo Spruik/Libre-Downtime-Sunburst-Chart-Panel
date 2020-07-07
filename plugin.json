@@ -14,6 +14,11 @@
       {"name": "Project site", "url": "https://github.com/Spruik/Libre-Downtime-Sunburst-Chart-Panel"},
       {"name": "Issues", "url": "https://github.com/Spruik/Libre-Downtime-Sunburst-Chart-Panel/issues"}
     ],
+    "screenshots": [
+      {"name": "Panel", "url": "public/plugins/libre-downtime-sunburst-chart-panel/docs/libre-downtime-sunburst-chart-panel.png" },
+      {"name": "Drilldown", "url": "public/plugins/libre-downtime-sunburst-chart-panel/docs/libre-downtime-sunburst-chart-panel-drilldown.png" },
+      {"name": "Metrics", "url": "public/plugins/libre-downtime-sunburst-chart-panel/docs/libre-downtime-sunburst-chart-panel-metrics.png" }
+    ],
     "logos": {
       "small": "img/icn-table-panel.svg",
       "large": "img/icn-table-panel.svg"
