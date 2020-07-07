@@ -1,11 +1,9 @@
-import angular from 'angular'
 import _ from 'lodash'
 import $ from 'jquery'
 import * as dp from './data_processor'
 import * as pie from './pie_chart_option'
-import * as utils from './utils'
 import echarts from './libs/echarts.min'
-import {MetricsPanelCtrl} from 'app/plugins/sdk'
+import { MetricsPanelCtrl } from 'app/plugins/sdk'
 import './css/style.css!'
 import './css/bootstrap-slider.css!'
 
@@ -15,128 +13,125 @@ const panelDefaults = {
   showHeader: true,
   styles: [],
   columns: [],
-  fontSize: '100%',
-};
+  fontSize: '100%'
+}
 
 export class ChartCtrl extends MetricsPanelCtrl {
+  constructor ($scope, $injector, templateSrv, annotationsSrv, $sanitize, variableSrv) {
+    super($scope, $injector)
 
-  constructor($scope, $injector, templateSrv, annotationsSrv, $sanitize, variableSrv) {
-    super($scope, $injector);
-
-    this.pageIndex = 0;
+    this.pageIndex = 0
 
     if (this.panel.styles === void 0) {
-      this.panel.styles = this.panel.columns;
-      this.panel.columns = this.panel.fields;
-      delete this.panel.columns;
-      delete this.panel.fields;
+      this.panel.styles = this.panel.columns
+      this.panel.columns = this.panel.fields
+      delete this.panel.columns
+      delete this.panel.fields
     }
 
-    _.defaults(this.panel, panelDefaults);
+    _.defaults(this.panel, panelDefaults)
 
-    this.events.on('data-received', this.onDataReceived.bind(this));
-    this.events.on('data-error', this.onDataError.bind(this));
-    this.events.on('data-snapshot-load', this.onDataReceived.bind(this));
+    this.events.on('data-received', this.onDataReceived.bind(this))
+    this.events.on('data-error', this.onDataError.bind(this))
+    this.events.on('data-snapshot-load', this.onDataReceived.bind(this))
 
     this.hasData = false
   }
 
-  issueQueries(datasource) {
-    this.pageIndex = 0;
+  issueQueries (datasource) {
+    this.pageIndex = 0
 
     if (this.panel.transform === 'annotations') {
-      this.setTimeQueryStart();
+      this.setTimeQueryStart()
       return this.annotationsSrv
         .getAnnotations({
           dashboard: this.dashboard,
           panel: this.panel,
-          range: this.range,
+          range: this.range
         })
         .then(annotations => {
-          return { data: annotations };
-        });
+          return { data: annotations }
+        })
     }
 
-    return super.issueQueries(datasource);
+    return super.issueQueries(datasource)
   }
 
-  onDataError(err) {
-    this.dataRaw = [];
-    this.render();
+  onDataError () {
+    this.dataRaw = []
+    this.render()
   }
 
-  onDataReceived(dataList) {
-
+  onDataReceived (dataList) {
     if (dataList.length === 0 || dataList === null || dataList === undefined) {
-        // console.log('No data reveived')
-        this.hasData = false
-        return
-    }else {
-        this.hasData = true
+      // console.log('No data reveived')
+      this.hasData = false
+      return
+    } else {
+      this.hasData = true
     }
 
     if (dataList[0].type !== 'table') {
-        console.log('To show the pie chart, please format data as a TABLE in the Metrics Setting')
-        return
+      console.log('To show the pie chart, please format data as a TABLE in the Metrics Setting')
+      return
     }
 
-    //dataList data is messy and with lots of unwanted data, so we need to filter out data that we want -
-    let data = dp.restructuredData(dataList[0].columns, dataList[0].rows)
+    // dataList data is messy and with lots of unwanted data, so we need to filter out data that we want -
+    const data = dp.restructuredData(dataList[0].columns, dataList[0].rows)
 
     if (dp.getCategories(data).length === 0) {
       this.hasData = false
       return
-    }    
+    }
 
     this.render(data)
   }
 
-  rendering(){
+  rendering () {
     this.render(this.globe_data)
   }
 
-  link(scope, elem, attrs, ctrl) {
-    const $panelContainer = elem.find('#reason-codes-sunburst-chart')[0];
+  link (scope, elem, attrs, ctrl) {
+    const $panelContainer = elem.find('#reason-codes-sunburst-chart')[0]
     const myChart = echarts.init($panelContainer)
-    
-    function renderPanel(data) { 
-      if (!myChart || !data) { return; }
+
+    function renderPanel (data) {
+      if (!myChart || !data) { return }
       const option = pie.getOption(data)
       myChart.off('click')
-      //after the json parsing, newOption's formatter will be removed due to it being a function, so assign it back
-      myChart.setOption(option);
+      // after the json parsing, newOption's formatter will be removed due to it being a function, so assign it back
+      myChart.setOption(option)
       setTimeout(() => {
         $('#reason-codes-sunburst-chart').height(ctrl.height - 51)
-        myChart.resize();
+        myChart.resize()
         window.onresize = () => {
-            myChart.resize();
+          myChart.resize()
         }
-      }, 500);
+      }, 500)
       myChart.on('click', params => {
         if (params.data.type === 'Category') {
           const reasonsData = dp.getReasonsData(params.data.name, data)
           option.series[1].data = reasonsData
-          myChart.setOption(option);
+          myChart.setOption(option)
         }
       })
     }
 
     ctrl.events.on('panel-size-changed', () => {
-        if (myChart) { 
-            const height = ctrl.height - 51
-            if (height >= 280) {
-              $('#reason-codes-sunburst-chart').height(height);
-            }
-            myChart.resize(); 
+      if (myChart) {
+        const height = ctrl.height - 51
+        if (height >= 280) {
+          $('#reason-codes-sunburst-chart').height(height)
         }
-      })
+        myChart.resize()
+      }
+    })
 
     ctrl.events.on('render', data => {
-      renderPanel(data);
-      ctrl.renderingCompleted();
-    });
+      renderPanel(data)
+      ctrl.renderingCompleted()
+    })
   }
-
 }
 
-ChartCtrl.templateUrl = 'public/plugins/libre-downtime-sunburt-chart-panel/partials/module.html';
+ChartCtrl.templateUrl = 'public/plugins/libre-downtime-sunburt-chart-panel/partials/module.html'
