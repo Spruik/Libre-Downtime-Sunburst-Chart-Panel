@@ -1,4 +1,4 @@
-# Sunburt Chart Downtime Analysis
+# Downtime Sunburst Chart
 
 > Libre Panel for Sunburt Chart Downtime Analysis
 
