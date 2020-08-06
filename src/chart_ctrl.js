@@ -157,4 +157,4 @@ export class ChartCtrl extends MetricsPanelCtrl {
   }
 }
 
-ChartCtrl.templateUrl = 'public/plugins/libre-downtime-sunburt-chart-panel/partials/module.html'
+ChartCtrl.templateUrl = 'public/plugins/libre-downtime-sunburst-chart-panel/partials/module.html'

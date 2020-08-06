@@ -75,7 +75,7 @@
       "timeFrom": null,
       "timeShift": null,
       "title": "Sunburst",
-      "type": "libre-downtime-sunburt-chart-panel"
+      "type": "libre-downtime-sunburst-chart-panel"
     }
   ],
   "refresh": false,

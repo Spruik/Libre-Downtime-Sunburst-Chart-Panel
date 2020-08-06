@@ -1,7 +1,7 @@
 {
-  "name": "libre-downtime-sunburt-chart-panel",
+  "name": "libre-downtime-sunburst-chart-panel",
   "version": "1.0.1",
-  "description": "Libre Panel for Sunburt Chart Downtime Analysis",
+  "description": "Libre Panel for Sunburst Chart Downtime Analysis",
   "repository": {
     "type": "git",
     "url": "https://github.com/Spruik/Libre-Downtime-Sunburst-Chart-Panel"

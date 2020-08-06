@@ -1,6 +1,6 @@
 {
-  "id": "libre-downtime-sunburt-chart-panel",
-  "name": "Libre Panel for Sunburt Chart Downtime Analysis",
+  "id": "libre-downtime-sunburst-chart-panel",
+  "name": "Libre Panel for Sunburst Chart Downtime Analysis",
   "type": "panel",
   "info": {
     "author": {

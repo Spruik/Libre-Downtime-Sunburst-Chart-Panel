@@ -1,6 +1,6 @@
 # Downtime Sunburst Chart
 
-> Libre Panel for Sunburt Chart Downtime Analysis
+> Libre Panel for Sunburst Chart Downtime Analysis
 
 This chart visualizes the part-to-whole of downtime categories and reasons frequency. Mouseover gives users additional information as to the downtime duration. This panel plugin is part of [Libre](https://github.com/Spruik/Libre).
 
@@ -198,5 +198,6 @@ For any issue, there are fundamentally three ways an individual can contribute:
   - Add grunt compress tar
   - Update README shell outputs
   - Bump Revision
+  - Rename sunburt to sunburst
 
 - 1.0.0 Initial Public Release
