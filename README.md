@@ -193,6 +193,10 @@ For any issue, there are fundamentally three ways an individual can contribute:
 
 ## Change log
 
+- 1.0.2 Rename sunburt to sunburst
+  - Rename sunburt to sunburst
+  - Bump Revision
+
 - 1.0.1 Add tar build output
   - Remove unused libraries and npm audit check
   - Add grunt compress tar
